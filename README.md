@@ -1,19 +1,15 @@
 # LiveTest
 
-To start your Phoenix server:
+Demonstrates a bug on first LV reconnect after a netsplit.
 
-  * Install dependencies with `mix deps.get`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+1. Install prerequisites (see `.tool-versions`)
+2. Start the server with `iex -S mix phx.server`
+3. Visit `localhost:4000`
+4. Click on the radio button to select an option.
+5. In the browser console run `liveSocket.disconnect()`, and then `liveSocket.connect()`.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+The selection will be cleared, because the change event is not fired (as can be seen by a lack of any output in the iex session after the last connect). If you now select something again and repeat the step 5, the change event will be fired, and the selection will not be cleared.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+The bug can be reproduced by refreshing the page. No need to restart the server.
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+I've tested this on the Firefox and Chromium browsers.
